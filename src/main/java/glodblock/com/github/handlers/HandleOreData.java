@@ -8,10 +8,7 @@ import glodblock.com.github.orevisualdetector.Main;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -60,7 +57,16 @@ public class HandleOreData {
             return sb.toString();
         } catch (Exception e) {
             try {
-                new File(new File(new File((File) FMLInjectionData.data()[6], "config"), "OreVisualDetector"), "CustomOreColorMap.json").createNewFile();
+                File tFile = new File(new File(new File((File) FMLInjectionData.data()[6], "config"), "OreVisualDetector"), "CustomOreColorMap.json");
+                tFile.createNewFile();
+                FileOutputStream tOut = new FileOutputStream(tFile, true);
+                String tBuffer =
+                        "{\n" +
+                        "  \"OreColorMap\":[\n" +
+                        "  ]\n" +
+                        "}\n";
+                tOut.write(tBuffer.getBytes(StandardCharsets.UTF_8));
+                tOut.close();
             } catch (Exception ignore) { }
         }
         return null;

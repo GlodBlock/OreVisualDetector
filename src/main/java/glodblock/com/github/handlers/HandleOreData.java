@@ -151,14 +151,54 @@ public class HandleOreData {
 
     public static void generatorSubOre(String oreDictName, short[] color, short id) {
         if (!oreDictName.startsWith("oreNether") && oreDictName.startsWith("ore")) {
-            String netherOre = oreDictName.replaceFirst("ore", "oreNether");
-            mOreDictMap.put(netherOre, color);
-            mNameToIDMAp.put(netherOre, id);
+            String subOre = oreDictName.replaceFirst("ore", "oreNether");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
         }
         if (!oreDictName.startsWith("oreEnd") && oreDictName.startsWith("ore")) {
-            String endOre = oreDictName.replaceFirst("ore", "oreEnd");
-            mOreDictMap.put(endOre, color);
-            mNameToIDMAp.put(endOre, id);
+            String subOre = oreDictName.replaceFirst("ore", "oreEnd");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreGravel") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreGravel");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreNetherrack") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreNetherrack");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreEndstone") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreEndstone");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreSand") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreSand");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreBlackgranite") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreBlackgranite");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreRedgranite") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreRedgranite");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreMarble") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreMarble");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
+        }
+        if (!oreDictName.startsWith("oreBasalt") && oreDictName.startsWith("ore")) {
+            String subOre = oreDictName.replaceFirst("ore", "oreBasalt");
+            mOreDictMap.put(subOre, color);
+            mNameToIDMAp.put(subOre, id);
         }
     }
 

@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 /**
  * Created by fnuecke on 1.6.2018.<p>
@@ -24,11 +23,7 @@ public class GetItemFromBlock {
             try {
                 final Item item = Item.getItemFromBlock(block);
                 final int damage = block.damageDropped(state);
-                final ItemStack stack = new ItemStack(item, 1, damage);
-                final int meta = item.getMetadata(stack);
-                if (Objects.equals(block.getStateFromMeta(meta), state)) {
-                    return stack;
-                }
+                return new ItemStack(item, 1, damage);
             } catch (final Throwable ignore) {
             }
         }

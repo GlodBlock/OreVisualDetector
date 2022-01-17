@@ -33,7 +33,7 @@ public class ItemLoader {
     };
 
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event){
+    public static void registerModels(ModelRegistryEvent event) {
         ModelLoader.setCustomModelResourceLocation(Scanner1, 0, new ModelResourceLocation(Objects.requireNonNull(Scanner1.getRegistryName()), "inventory"));
         Scanner1.initModel();
     }

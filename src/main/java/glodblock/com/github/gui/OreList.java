@@ -63,7 +63,7 @@ public class OreList extends GuiScrollingList {
         HandleOreData.mTranslate.put("All", I18n.format("scanner.gui.all"));
         parent.drawString(
                 parent.mc.fontRenderer,
-                parent.mc.fontRenderer.trimStringToWidth(HandleOreData.mTranslate.get(keys.get(slotIdx)), listWidth - 10),
+                parent.mc.fontRenderer.trimStringToWidth(HandleOreData.mTranslate.get(keys.get(slotIdx)) == null ? "Unknown" : HandleOreData.mTranslate.get(keys.get(slotIdx)), listWidth - 10),
                 this.left + 3,
                 slotTop - 1,
                 ores.getOrDefault(keys.get(slotIdx), 0x7d7b76)

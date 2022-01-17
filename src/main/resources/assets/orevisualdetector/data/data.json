@@ -1,0 +1,342 @@
+{
+  "OreColorMap":[
+    {
+      "OreDict": "oreIron",
+      "R": 196,
+      "G": 168,
+      "B": 168
+    },
+    {
+      "OreDict": "oreDiamond",
+      "R": 37,
+      "B": 186,
+      "G": 164
+    },
+    {
+      "OreDict": "oreCoal",
+      "R": 66,
+      "G": 66,
+      "B": 66
+    },
+    {
+      "OreDict": "oreGold",
+      "R": 212,
+      "G": 206,
+      "B": 23
+    },
+    {
+      "OreDict": "oreLapis",
+      "R": 37,
+      "G": 34,
+      "B": 212
+    },
+    {
+      "OreDict": "oreRedstone",
+      "R": 255,
+      "G": 25,
+      "B": 25
+    },
+    {
+      "OreDict": "oreEmerald",
+      "R": 54,
+      "G": 232,
+      "B": 0
+    },
+    {
+      "OreDict": "oreQuartz",
+      "R": 181,
+      "G": 141,
+      "B": 141
+    },
+    {
+      "OreDict": "oreQuartzBlack",
+      "R": 79,
+      "G": 57,
+      "B": 57
+    },
+    {
+      "OreDict": "oreCertusQuartz",
+      "R": 116,
+      "G": 216,
+      "B": 232
+    },
+    {
+      "OreDict": "oreChargedCertusQuartz",
+      "R": 116,
+      "G": 216,
+      "B": 232
+    },
+    {
+      "Unlocalized": "block.astralsorcery.blockcustomore.name",
+      "R": 222,
+      "G": 222,
+      "B": 222
+    },
+    {
+      "OreDict": "oreAstralStarmetal",
+      "R": 0,
+      "G": 29,
+      "B": 156
+    },
+    {
+      "OreDict": "oreAstralStarmetal",
+      "R": 0,
+      "G": 29,
+      "B": 156
+    },
+    {
+      "OreDict": "oreAquamarine",
+      "R": 107,
+      "G": 134,
+      "B": 255
+    },
+    {
+      "Unlocalized": "block.biomesoplenty.biome_block.name",
+      "R": 57,
+      "G": 237,
+      "B": 75
+    },
+    {
+      "OreDict": "oreAmethyst",
+      "R": 204,
+      "G": 57,
+      "B": 237
+    },
+    {
+      "OreDict": "oreRuby",
+      "R": 247,
+      "G": 64,
+      "B": 82
+    },
+    {
+      "OreDict": "orePeridot",
+      "R": 64,
+      "G": 247,
+      "B": 119
+    },
+    {
+      "OreDict": "oreTopaz",
+      "R": 222,
+      "G": 217,
+      "B": 62
+    },
+    {
+      "OreDict": "oreTanzanite",
+      "R": 146,
+      "G": 21,
+      "B": 191
+    },
+    {
+      "OreDict": "oreMalachite",
+      "R": 32,
+      "G": 191,
+      "B": 21
+    },
+    {
+      "OreDict": "oreSapphire",
+      "R": 42,
+      "G": 162,
+      "B": 222
+    },
+    {
+      "OreDict": "oreAmber",
+      "R": 213,
+      "G": 222,
+      "B": 42
+    },
+    {
+      "OreDict": "oreDraconium",
+      "R": 133,
+      "G": 0,
+      "B": 148
+    },
+    {
+      "OreDict": "oreApatite",
+      "R": 57,
+      "G": 138,
+      "B": 204
+    },
+    {
+      "OreDict": "oreOsmium",
+      "R": 22,
+      "G": 132,
+      "B": 222
+    },
+    {
+      "OreDict": "oreOsmium",
+      "R": 22,
+      "G": 132,
+      "B": 222
+    },
+    {
+      "OreDict": "oreThorium",
+      "R": 19,
+      "G": 28,
+      "B": 36
+    },
+    {
+      "OreDict": "oreThorium",
+      "R": 19,
+      "G": 28,
+      "B": 36
+    },
+    {
+      "OreDict": "oreBoron",
+      "R": 140,
+      "G": 133,
+      "B": 133
+    },
+    {
+      "OreDict": "oreLithium",
+      "R": 144,
+      "G": 116,
+      "B": 153
+    },
+    {
+      "OreDict": "oreMagnesium",
+      "R": 255,
+      "G": 97,
+      "B": 239
+    },
+    {
+      "OreDict": "oreDimensionalShard",
+      "R": 79,
+      "G": 255,
+      "B": 229
+    },
+    {
+      "OreDict": "oreCinnabar",
+      "R": 171,
+      "G": 0,
+      "B": 0
+    },
+    {
+      "OreDict": "oreCopper",
+      "R": 222,
+      "G": 122,
+      "B": 22
+    },
+    {
+      "OreDict": "oreTin",
+      "R": 227,
+      "G": 218,
+      "B": 218
+    },
+    {
+      "OreDict": "oreTin",
+      "R": 227,
+      "G": 218,
+      "B": 218
+    },
+    {
+      "OreDict": "oreSilver",
+      "R": 191,
+      "G": 219,
+      "B": 218
+    },
+    {
+      "OreDict": "oreLead",
+      "R": 98,
+      "G": 51,
+      "B": 140
+    },
+    {
+      "OreDict": "oreAluminum",
+      "R": 86,
+      "G": 183,
+      "B": 232
+    },
+    {
+      "Redirect": "oreAluminum",
+      "OreDict": "oreAluminium"
+    },
+    {
+      "OreDict": "oreNickel",
+      "R": 128,
+      "G": 124,
+      "B": 194
+    },
+    {
+      "OreDict": "orePlatinum",
+      "R": 188,
+      "G": 209,
+      "B": 81
+    },
+    {
+      "OreDict": "oreIridium",
+      "R": 227,
+      "G": 232,
+      "B": 199
+    },
+    {
+      "OreDict": "oreMithril",
+      "R": 36,
+      "G": 113,
+      "B": 255
+    },
+    {
+      "OreDict": "oreClathrateRedstone",
+      "R": 255,
+      "G": 36,
+      "B": 36
+    },
+    {
+      "OreDict": "oreClathrateGlowstone",
+      "R": 255,
+      "G": 231,
+      "B": 18
+    },
+    {
+      "OreDict": "oreClathrateOilSand",
+      "R": 18,
+      "G": 16,
+      "B": 16
+    },
+    {
+      "OreDict": "oreClathrateEnder",
+      "R": 15,
+      "G": 84,
+      "B": 74
+    },
+    {
+      "Redirect": "oreClathrateOilSand",
+      "OreDict": "oreOilSand"
+    },
+    {
+      "OreDict": "oreCobalt",
+      "R": 31,
+      "G": 12,
+      "B": 153
+    },
+    {
+      "OreDict": "oreArdite",
+      "R": 222,
+      "G": 158,
+      "B": 56
+    },
+    {
+      "OreDict": "oreDilithium",
+      "R": 209,
+      "G": 121,
+      "B": 170
+    },
+    {
+      "OreDict": "oreRutile",
+      "R": 199,
+      "G": 0,
+      "B": 109
+    },
+    {
+      "OreDict": "oreTitanium",
+      "R": 217,
+      "G": 78,
+      "B": 155
+    },
+    {
+      "OreDict": "oreUranium",
+      "R": 21,
+      "G": 171,
+      "B": 36
+    }
+  ]
+}

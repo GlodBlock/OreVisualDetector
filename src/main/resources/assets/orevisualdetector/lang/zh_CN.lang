@@ -1,0 +1,8 @@
+#items
+item.orevisualdetector.scanner.name=探矿仪
+
+#Tab
+itemGroup.Scanner=探矿仪
+
+#GUI
+scanner.gui.all=全部矿石

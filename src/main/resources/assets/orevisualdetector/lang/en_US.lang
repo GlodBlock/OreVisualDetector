@@ -1,0 +1,8 @@
+#items
+item.orevisualdetector.scanner.name=Ore Scanner
+
+#Tab
+itemGroup.Scanner=The Scanner
+
+#GUI
+scanner.gui.all=All

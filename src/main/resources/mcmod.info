@@ -1,0 +1,16 @@
+[
+{
+  "modid": "orevisualdetector",
+  "name": "Ore Visual Detector",
+  "description": "A port of Detrav Scanner mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["GlodBlock"],
+  "credits": "Detrav",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

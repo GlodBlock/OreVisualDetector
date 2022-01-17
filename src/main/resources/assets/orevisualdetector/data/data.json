@@ -79,12 +79,6 @@
       "B": 156
     },
     {
-      "OreDict": "oreAstralStarmetal",
-      "R": 0,
-      "G": 29,
-      "B": 156
-    },
-    {
       "OreDict": "oreAquamarine",
       "R": 107,
       "G": 134,
@@ -163,18 +157,6 @@
       "B": 222
     },
     {
-      "OreDict": "oreOsmium",
-      "R": 22,
-      "G": 132,
-      "B": 222
-    },
-    {
-      "OreDict": "oreThorium",
-      "R": 19,
-      "G": 28,
-      "B": 36
-    },
-    {
       "OreDict": "oreThorium",
       "R": 19,
       "G": 28,
@@ -215,12 +197,6 @@
       "R": 222,
       "G": 122,
       "B": 22
-    },
-    {
-      "OreDict": "oreTin",
-      "R": 227,
-      "G": 218,
-      "B": 218
     },
     {
       "OreDict": "oreTin",

@@ -1,6 +1,7 @@
 package glodblock.com.github.orevisualdetector;
 
 import glodblock.com.github.common.CommonProxy;
+import glodblock.com.github.config.ConfigLoader;
 import glodblock.com.github.handlers.HandleOreData;
 import glodblock.com.github.network.ScannerNetWork;
 import net.minecraftforge.fml.common.Mod;
@@ -30,7 +31,8 @@ public class Main {
 
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
-        HandleOreData.processColorMapData();
+        ConfigLoader.run();
+        HandleOreData.run();
         proxy.onPreInit();
     }
     @EventHandler

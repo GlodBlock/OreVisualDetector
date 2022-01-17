@@ -1,5 +1,6 @@
 package glodblock.com.github.items;
 
+import glodblock.com.github.config.ConfigLoader;
 import glodblock.com.github.gui.ScannerGUI;
 import glodblock.com.github.gui.ScannerGUITexture;
 import glodblock.com.github.handlers.GetItemFromBlock;
@@ -34,7 +35,7 @@ public class Scanner extends ItemBase {
         if (aWorld.isRemote) {
             final int cX = ((int) aPlayer.posX) >> 4;
             final int cZ = ((int) aPlayer.posZ) >> 4;
-            int size = 6;
+            int size = ConfigLoader.ScannerSize + 1;
             final List<Chunk> chunks = new ArrayList<>();
 
             for (int i = -size; i <= size; i++)

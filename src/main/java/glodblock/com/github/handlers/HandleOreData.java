@@ -6,10 +6,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import glodblock.com.github.orevisualdetector.Main;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -44,8 +47,31 @@ public class HandleOreData {
         }
     }
 
-    public static void processColorMapData() {
-        String data = readJsonFile();
+    public static String tryReadJsonFile() {
+        try {
+            URL url = new File(new File(new File((File) FMLInjectionData.data()[6], "config"), "OreVisualDetector"), "CustomOreColorMap.json").toURI().toURL();
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+            String s;
+            StringBuilder sb = new StringBuilder();
+            while ((s = in.readLine()) != null) {
+                sb.append(s);
+            }
+            in.close();
+            return sb.toString();
+        } catch (Exception e) {
+            try {
+                new File(new File(new File((File) FMLInjectionData.data()[6], "config"), "OreVisualDetector"), "CustomOreColorMap.json").createNewFile();
+            } catch (Exception ignore) { }
+        }
+        return null;
+    }
+
+    public static void run() {
+        processColorMapData(readJsonFile());
+        processColorMapData(tryReadJsonFile());
+    }
+
+    public static void processColorMapData(String data) {
         if (data == null) {
             return;
         }

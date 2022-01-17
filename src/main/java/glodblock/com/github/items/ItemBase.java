@@ -23,7 +23,7 @@ public class ItemBase extends Item{
     }
 
     @SideOnly(Side.CLIENT)
-    public void initModel(){
+    public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(Objects.requireNonNull(getRegistryName()), "inventory"));
     }
 

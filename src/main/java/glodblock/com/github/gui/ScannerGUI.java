@@ -31,7 +31,6 @@ public class ScannerGUI extends GuiScreen {
     public static void newMap(ScannerGUITexture aMap) {
         if (map != null) {
             map.deleteGlTexture();
-            map = null;
         }
         map = aMap;
         map.loadTexture(null);

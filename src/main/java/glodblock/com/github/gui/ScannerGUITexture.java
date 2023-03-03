@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IResourceManager;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nullable;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
@@ -58,7 +59,7 @@ public class ScannerGUITexture extends AbstractTexture {
                     raster.setSample(i, j, 2, raster.getSample(i, j, 2) / 2);
                 }
                 // draw grid
-                if ((i) % 16 == 0 || (j) % 16 == 0) {
+                if (i % 16 == 0 || j % 16 == 0) {
                     raster.setSample(i, j, 0, raster.getSample(i, j, 0) / 2);
                     raster.setSample(i, j, 1, raster.getSample(i, j, 1) / 2);
                     raster.setSample(i, j, 2, raster.getSample(i, j, 2) / 2);
@@ -69,7 +70,7 @@ public class ScannerGUITexture extends AbstractTexture {
     }
 
     @Override
-    public void loadTexture(IResourceManager resourceManager) {
+    public void loadTexture(@Nullable IResourceManager resourceManager) {
         this.deleteGlTexture();
         if(packet != null) {
             int tId = getGlTextureId();
@@ -90,10 +91,9 @@ public class ScannerGUITexture extends AbstractTexture {
         loadTexture(resourceManager, invert);
     }
 
-    public int glBindTexture() {
-        if (this.glTextureId < 0) return this.glTextureId;
+    public void glBindTexture() {
+        if (this.glTextureId < 0) return;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.getGlTextureId());
-        return this.glTextureId;
     }
 
     public void draw(int x, int y) {

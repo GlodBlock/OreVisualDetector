@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,9 @@ public class Scanner extends ItemBase {
         super(name);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(final World aWorld, final EntityPlayer aPlayer, final EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(final World aWorld, @Nonnull final EntityPlayer aPlayer, @Nonnull final EnumHand hand) {
         if (aWorld.isRemote) {
             final int cX = ((int) aPlayer.posX) >> 4;
             final int cZ = ((int) aPlayer.posZ) >> 4;
@@ -56,16 +58,16 @@ public class Scanner extends ItemBase {
                             for (int ID : OreDictionary.getOreIDs(tItem)) {
                                 String tOreDictName = OreDictionary.getOreName(ID);
                                 if (HandleOreData.mOreDictMap.containsKey(tOreDictName)) {
-                                    packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandleOreData.mNameToIDMAp.get(tOreDictName));
-                                    addOre(packet, HandleOreData.mNameToIDMAp.get(tOreDictName));
-                                    HandleOreData.mIDToDisplayNameMAp.put(HandleOreData.mNameToIDMAp.get(tOreDictName), tItem.getDisplayName());
+                                    packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandleOreData.mNameToIDMap.get(tOreDictName));
+                                    addOre(packet, HandleOreData.mNameToIDMap.get(tOreDictName));
+                                    HandleOreData.mIDToDisplayNameMap.put(HandleOreData.mNameToIDMap.get(tOreDictName), tItem.getDisplayName());
                                 }
                             }
                             String unName = tItem.getTranslationKey();
                             if (HandleOreData.mUnlocalizedMap.containsKey(unName)) {
-                                packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandleOreData.mNameToIDMAp.get(unName));
-                                addOre(packet, HandleOreData.mNameToIDMAp.get(unName));
-                                HandleOreData.mIDToDisplayNameMAp.put(HandleOreData.mNameToIDMAp.get(unName), tItem.getDisplayName());
+                                packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandleOreData.mNameToIDMap.get(unName));
+                                addOre(packet, HandleOreData.mNameToIDMap.get(unName));
+                                HandleOreData.mIDToDisplayNameMap.put(HandleOreData.mNameToIDMap.get(unName), tItem.getDisplayName());
                             }
                         }
                     }

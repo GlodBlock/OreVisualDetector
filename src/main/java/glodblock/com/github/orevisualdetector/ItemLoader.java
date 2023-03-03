@@ -11,6 +11,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -23,6 +24,7 @@ public class ItemLoader {
 
     public static final CreativeTabs myTab = new CreativeTabs("Scanner") {
         @Override
+        @Nonnull
         public ItemStack createIcon() {
             return new ItemStack(Scanner1);
         }

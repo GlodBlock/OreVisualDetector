@@ -7,6 +7,7 @@ import glodblock.com.github.gui.ScannerGUI;
 import glodblock.com.github.gui.ScannerGUITexture;
 import glodblock.com.github.handlers.HandleOreData;
 import glodblock.com.github.orevisualdetector.Main;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,6 +31,7 @@ public class ScannerPacket implements BasePacket {
 
     public int level = -1;
 
+    @SuppressWarnings("unchecked")
     public ScannerPacket(int chunkX, int chunkZ, int posX, int posZ, int size, int ptype) {
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
@@ -45,17 +47,16 @@ public class ScannerPacket implements BasePacket {
     public static void addOre(ScannerPacket packet, short id) {
         String name;
         short[] rgba;
-        String unlocalizedName = HandleOreData.mIDToNameMAp.get(id);
+        String unlocalizedName = HandleOreData.mIDToNameMap.get(id);
         try {
             if(packet.ptype == 0 || packet.ptype == 1) {
                 rgba = new short[]{0, 0, 0};
                 if (HandleOreData.mOreDictMap.containsKey(unlocalizedName)) {
                     rgba = HandleOreData.mOreDictMap.get(unlocalizedName);
-                }
-                else if (HandleOreData.mUnlocalizedMap.containsKey(unlocalizedName)) {
+                } else if (HandleOreData.mUnlocalizedMap.containsKey(unlocalizedName)) {
                     rgba = HandleOreData.mUnlocalizedMap.get(unlocalizedName);
                 }
-                name = HandleOreData.mIDToDisplayNameMAp.get(id);
+                name = HandleOreData.mIDToDisplayNameMap.get(id);
                 HandleOreData.mTranslate.put(unlocalizedName, name);
             } else {
                 return;
@@ -63,7 +64,6 @@ public class ScannerPacket implements BasePacket {
         } catch (Exception ignored) {
             return;
         }
-        //TheDisorder.Logger.info(id + unlocalizedName + ((rgba[0] & 0xFF) << 16) + ((rgba[1] & 0xFF) << 8) + ((rgba[2] & 0xFF)));
         packet.ores.put(unlocalizedName, ((rgba[0] & 0xFF) << 16) + ((rgba[1] & 0xFF) << 8) + ((rgba[2] & 0xFF)));
         packet.metaMap.put(id, unlocalizedName);
     }
@@ -83,7 +83,6 @@ public class ScannerPacket implements BasePacket {
                     final byte y = aData.readByte();
                     final short meta = aData.readShort();
                     packet.map[i][j].put(y, meta);
-                    //if (packet.ptype != 2 || y == 1) addOre(packet, y, i, j, meta);
                     checkOut++;
                 }
             }
@@ -131,7 +130,7 @@ public class ScannerPacket implements BasePacket {
     @SideOnly(Side.CLIENT)
     @Override
     public void process() {
-        if (Thread.currentThread().getName().equals("Client thread")) {
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
             ScannerGUI.newMap(new ScannerGUITexture(this));
             Main.proxy.openProspectorGUI();
         }

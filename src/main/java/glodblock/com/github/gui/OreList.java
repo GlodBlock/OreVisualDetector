@@ -24,17 +24,18 @@ public class OreList extends GuiScrollingList {
     private final BiConsumer<String, Boolean> onSelected;
     private boolean invert = false;
 
-    private int selected = -1;
+    private int selected;
 
+    @SuppressWarnings("deprecation")
     public OreList(GuiScreen parent, int width, int height, int top, int bottom, int left, int entryHeight, HashMap<String, Integer> aOres, BiConsumer<String, Boolean> onSelected) {
         super(parent.mc, width, height, top, bottom, left, entryHeight);
         this.parent = parent;
         this.onSelected = onSelected;
-        ores = aOres;
-        keys = new ArrayList<>(ores.keySet());
-        Collections.sort(keys);
-        if(keys.size() > 1) keys.add(0, "All");
-        selected = 0;
+        this.ores = aOres;
+        this.keys = new ArrayList<>(this.ores.keySet());
+        Collections.sort(this.keys);
+        if(this.keys.size() > 1) this.keys.add(0, "All");
+        this.selected = 0;
     }
 
     @Override
@@ -46,7 +47,6 @@ public class OreList extends GuiScrollingList {
     protected void elementClicked(int index, boolean doubleClick) {
         selected = index;
         if (doubleClick) this.invert = !this.invert;
-
         if(onSelected != null) onSelected.accept(keys.get(index), this.invert);
     }
 
@@ -63,7 +63,9 @@ public class OreList extends GuiScrollingList {
         HandleOreData.mTranslate.put("All", I18n.format("scanner.gui.all"));
         parent.drawString(
                 parent.mc.fontRenderer,
-                parent.mc.fontRenderer.trimStringToWidth(HandleOreData.mTranslate.get(keys.get(slotIdx)) == null ? "Unknown" : HandleOreData.mTranslate.get(keys.get(slotIdx)), listWidth - 10),
+                parent.mc.fontRenderer.trimStringToWidth(HandleOreData.mTranslate.get(keys.get(slotIdx)) == null ?
+                        "Unknown" :
+                        HandleOreData.mTranslate.get(keys.get(slotIdx)), listWidth - 10),
                 this.left + 3,
                 slotTop - 1,
                 ores.getOrDefault(keys.get(slotIdx), 0x7d7b76)

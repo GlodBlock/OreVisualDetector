@@ -1,10 +1,19 @@
 package glodblock.com.github.gui;
 
+import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
+import glodblock.com.github.handlers.HandlerIEVein;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by wital_000 on 21.03.2016.<p>
@@ -76,6 +85,32 @@ public class ScannerGUI extends GuiScreen {
         for(int i = aX ; i <aX + currentWidth + 100 ; i += 128) drawTexturedModalRect(i,aY+currentHeight,5,161,Math.min(128,aX+currentWidth+100-i),5); //down
         for(int i = aY ; i <aY + currentHeight ; i += 128) drawTexturedModalRect(aX-5,i,0,5,5,Math.min(128,aY + currentHeight-i)); //left
         for(int i = aY ; i <aY + currentHeight ; i += 128) drawTexturedModalRect(aX+currentWidth+100,i,171,5,5,Math.min(128,aY+currentHeight-i)); //right
+
+        if (map.packet.ptype == 1) {
+            HashMap<Byte, Short>[][] veinInfo = map.packet.map;
+            int tX = x - aX;
+            int tY = y - aY;
+            if (tX >= 0 && tY >= 0 && tX < veinInfo.length && tY < veinInfo[0].length) {
+                List<String> info = new ArrayList<>();
+                if (veinInfo[tX][tY] != null && veinInfo[tX][tY].containsKey((byte) 255)) {
+                    short veinID = veinInfo[tX][tY].get((byte) 255);
+                    if (map.selected.equals("All") || map.selected.equals(HandlerIEVein.IDToVeinMap.get(veinID))) {
+                        ExcavatorHandler.MineralMix vein = HandlerIEVein.IDToMaterialMap.get(veinID);
+                        String displayString;
+                        if (I18n.hasKey("desc.immersiveengineering.info.mineral." + vein.name)) {
+                            displayString = I18n.format("desc.immersiveengineering.info.mineral." + vein.name);
+                        } else {
+                            displayString = vein.name;
+                        }
+                        info.add(TextFormatting.AQUA + displayString);
+                        for (Pair<String, Float> p : HandlerIEVein.getMaterialList(vein)) {
+                            info.add(String.format("%s %.2f%%", p.getKey(), p.getValue() * 100));
+                        }
+                    }
+                }
+                this.drawHoveringText(info, x, y);
+            }
+        }
     }
 
 }

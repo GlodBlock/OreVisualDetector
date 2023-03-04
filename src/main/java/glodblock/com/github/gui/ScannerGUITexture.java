@@ -21,7 +21,7 @@ import java.awt.image.WritableRaster;
 public class ScannerGUITexture extends AbstractTexture {
 
     public final ScannerPacket packet;
-    private String selected = "All";
+    public String selected = "All";
     public int width = -1;
     public int height = -1;
     public boolean invert = false;

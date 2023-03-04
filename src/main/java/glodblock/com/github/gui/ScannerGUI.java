@@ -7,6 +7,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
@@ -34,11 +35,12 @@ public class ScannerGUI extends GuiScreen {
     private final static int minWidth = 128;
     private int prevW;
     private int prevH;
+    private final Container c;
 
     private static final ResourceLocation back = new ResourceLocation("orevisualdetector:textures/gui/propick.png");
 
     public ScannerGUI() {
-
+        this.c = new EmptyContainer();
     }
 
     @SideOnly(Side.CLIENT)
@@ -48,6 +50,18 @@ public class ScannerGUI extends GuiScreen {
         }
         map = aMap;
         map.loadTexture(null);
+    }
+
+    @Override
+    public void initGui() {
+        this.mc.player.openContainer = this.c;
+    }
+
+    @Override
+    public void onGuiClosed() {
+        if (this.mc.player != null) {
+            this.c.onContainerClosed(this.mc.player);
+        }
     }
 
     @Override

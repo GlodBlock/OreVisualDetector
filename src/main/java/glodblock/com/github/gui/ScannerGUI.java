@@ -50,7 +50,7 @@ public class ScannerGUI extends GuiScreen {
                     this, 100, currentHeight, aY, aY+currentHeight, aX+currentWidth, 10, map.packet.ores,
                     ((name, invert) -> {
                         if (map != null) map.loadTexture(null, name, invert);
-                    })
+                    }), map.packet.ptype
             );
             prevW = width;
             prevH = height;

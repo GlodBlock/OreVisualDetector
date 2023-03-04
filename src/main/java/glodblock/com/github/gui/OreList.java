@@ -1,15 +1,13 @@
 package glodblock.com.github.gui;
 
 import glodblock.com.github.handlers.HandleOreData;
+import glodblock.com.github.handlers.HandlerIEVein;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
@@ -25,9 +23,10 @@ public class OreList extends GuiScrollingList {
     private boolean invert = false;
 
     private int selected;
+    private final int mode;
 
     @SuppressWarnings("deprecation")
-    public OreList(GuiScreen parent, int width, int height, int top, int bottom, int left, int entryHeight, HashMap<String, Integer> aOres, BiConsumer<String, Boolean> onSelected) {
+    public OreList(GuiScreen parent, int width, int height, int top, int bottom, int left, int entryHeight, HashMap<String, Integer> aOres, BiConsumer<String, Boolean> onSelected, int mode) {
         super(parent.mc, width, height, top, bottom, left, entryHeight);
         this.parent = parent;
         this.onSelected = onSelected;
@@ -36,6 +35,7 @@ public class OreList extends GuiScrollingList {
         Collections.sort(this.keys);
         if(this.keys.size() > 1) this.keys.add(0, "All");
         this.selected = 0;
+        this.mode = mode;
     }
 
     @Override
@@ -60,12 +60,38 @@ public class OreList extends GuiScrollingList {
 
     @Override
     protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
-        HandleOreData.mTranslate.put("All", I18n.format("scanner.gui.all"));
+        String displayString = "Unknown";
+        if (Objects.equals(keys.get(slotIdx), "All")) {
+            displayString = I18n.format("scanner.gui.all");
+        } else {
+            if (this.mode == 0) {
+                short id = -1;
+                if (HandleOreData.mNameToIDMap.containsKey(keys.get(slotIdx))) {
+                    id = HandleOreData.mNameToIDMap.get(keys.get(slotIdx));
+                }
+                if (id == -1) {
+                    displayString = "Unknown";
+                } else {
+                    String unName = HandleOreData.mIDToDisplayNameMap.get(id);
+                    if (I18n.hasKey(unName + ".name")) {
+                        displayString = I18n.format(unName + ".name");
+                    } else if (I18n.hasKey(unName)) {
+                        displayString = I18n.format(unName);
+                    } else {
+                        displayString = "Unknown";
+                    }
+                }
+            } else if (this.mode == 1) {
+                if (I18n.hasKey("desc.immersiveengineering.info.mineral." + keys.get(slotIdx))) {
+                    displayString = I18n.format("desc.immersiveengineering.info.mineral." + keys.get(slotIdx));
+                } else {
+                    displayString = keys.get(slotIdx);
+                }
+            }
+        }
         parent.drawString(
                 parent.mc.fontRenderer,
-                parent.mc.fontRenderer.trimStringToWidth(HandleOreData.mTranslate.get(keys.get(slotIdx)) == null ?
-                        "Unknown" :
-                        HandleOreData.mTranslate.get(keys.get(slotIdx)), listWidth - 10),
+                parent.mc.fontRenderer.trimStringToWidth(displayString, listWidth - 10),
                 this.left + 3,
                 slotTop - 1,
                 ores.getOrDefault(keys.get(slotIdx), 0x7d7b76)

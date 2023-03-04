@@ -1,41 +1,35 @@
 package glodblock.com.github.common;
 
-import glodblock.com.github.event.EventHandler;
-import glodblock.com.github.gui.ScannerGUI;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
+import glodblock.com.github.handlers.HandlerIEVein;
+import glodblock.com.github.network.GuiOpenPacket;
+import glodblock.com.github.network.ScannerPacket;
+import glodblock.com.github.orevisualdetector.Main;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
-public class CommonProxy implements IGuiHandler {
+public class CommonProxy {
+
+    public final SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(Main.MODID);
+
     public void onLoad() {
     }
 
     public void onPostLoad() {
-        EventHandler.register();
-    }
-
-    @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        return null;
-    }
-
-    @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        if (ID == ScannerGUI.GUI_ID) {
-            return new ScannerGUI();
-        }
-        return null;
-    }
-
-
-    public void openProspectorGUI() {
-        //just Client code
+        NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new GUIHandler());
     }
 
 
     public void onPreInit() {
+        this.netHandler.registerMessage(new ScannerPacket.Handler(), ScannerPacket.class, 0, Side.CLIENT);
+        this.netHandler.registerMessage(new GuiOpenPacket.Handler(), GuiOpenPacket.class, 1, Side.SERVER);
     }
 
-    public void sendPlayerException(String s) {
+    public void onFinish() {
+        if (Loader.isModLoaded("immersiveengineering")) {
+            HandlerIEVein.init();
+        }
     }
+
 }

@@ -28,6 +28,15 @@ minecraft {
     replaceIn("Gregicality.java")
 }
 
+repositories {
+    maven { url 'https://cursemaven.com/' }
+    maven { url 'https://minecraft.curseforge.com/api/maven/' }
+}
+
+dependencies {
+    compileOnly "immersive-engineering:ImmersiveEngineering:0.12:78"
+}
+
 jar {
     manifest {
         attributes 'FMLCorePluginContainsFMLMod': 'true'

@@ -22,7 +22,6 @@ public class HandleOreData {
     public static HashMap<String, Short> mNameToIDMap = new HashMap<>();
     public static HashMap<Short, String> mIDToNameMap = new HashMap<>();
     public static HashMap<Short, String> mIDToDisplayNameMap = new HashMap<>();
-    public static HashMap<String, String> mTranslate = new HashMap<>();
 
     public static String readJsonFile() {
         try {

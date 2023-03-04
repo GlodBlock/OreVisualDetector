@@ -6,3 +6,8 @@ itemGroup.Scanner=The Scanner
 
 #GUI
 scanner.gui.all=All
+
+#Info
+scanner.mode.0=Scan in world ores
+scanner.mode.1=Scan IE Excavator veins
+scanner.error.ie=IE isn't installed

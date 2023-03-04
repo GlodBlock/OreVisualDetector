@@ -2,10 +2,15 @@ package glodblock.com.github.gui;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
 import glodblock.com.github.handlers.HandlerIEVein;
+import glodblock.com.github.handlers.HandlerOilVein;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.Pair;
@@ -86,10 +91,10 @@ public class ScannerGUI extends GuiScreen {
         for(int i = aY ; i <aY + currentHeight ; i += 128) drawTexturedModalRect(aX-5,i,0,5,5,Math.min(128,aY + currentHeight-i)); //left
         for(int i = aY ; i <aY + currentHeight ; i += 128) drawTexturedModalRect(aX+currentWidth+100,i,171,5,5,Math.min(128,aY+currentHeight-i)); //right
 
+        HashMap<Byte, Short>[][] veinInfo = map.packet.map;
+        int tX = x - aX;
+        int tY = y - aY;
         if (map.packet.ptype == 1) {
-            HashMap<Byte, Short>[][] veinInfo = map.packet.map;
-            int tX = x - aX;
-            int tY = y - aY;
             if (tX >= 0 && tY >= 0 && tX < veinInfo.length && tY < veinInfo[0].length) {
                 List<String> info = new ArrayList<>();
                 if (veinInfo[tX][tY] != null && veinInfo[tX][tY].containsKey((byte) 255)) {
@@ -106,6 +111,28 @@ public class ScannerGUI extends GuiScreen {
                         for (Pair<String, Float> p : HandlerIEVein.getMaterialList(vein)) {
                             info.add(String.format("%s %.2f%%", p.getKey(), p.getValue() * 100));
                         }
+                    }
+                }
+                this.drawHoveringText(info, x, y);
+            }
+        } else if (map.packet.ptype == 2) {
+            if (tX >= 0 && tY >= 0 && tX < veinInfo.length && tY < veinInfo[0].length) {
+                List<String> info = new ArrayList<>();
+                if (veinInfo[tX][tY] != null && veinInfo[tX][tY].containsKey((byte) 0)) {
+                    short fluidID = veinInfo[tX][tY].get((byte) 0);
+                    ByteBuf buf = Unpooled.buffer(64);
+                    buf.writeShort(veinInfo[tX][tY].get((byte) 1));
+                    buf.writeShort(veinInfo[tX][tY].get((byte) 2));
+                    int amount = buf.readInt();
+                    buf.writeShort(veinInfo[tX][tY].get((byte) 3));
+                    buf.writeShort(veinInfo[tX][tY].get((byte) 4));
+                    int recover = buf.readInt();
+                    Fluid fluid = HandlerOilVein.getFluid(fluidID);
+                    if (map.selected.equals("All") || map.selected.equals(fluid.getName())) {
+                        String displayString = fluid.getLocalizedName(new FluidStack(fluid, 1));
+                        info.add(TextFormatting.AQUA + displayString);
+                        info.add(I18n.format("scanner.gui.fluid.amount", amount));
+                        info.add(I18n.format("scanner.gui.fluid.recover", recover));
                     }
                 }
                 this.drawHoveringText(info, x, y);

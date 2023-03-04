@@ -2,7 +2,7 @@ package glodblock.com.github.orevisualdetector;
 
 import glodblock.com.github.common.CommonProxy;
 import glodblock.com.github.config.ConfigLoader;
-import glodblock.com.github.handlers.HandleOreData;
+import glodblock.com.github.handlers.HandlerOreData;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -18,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
         name = Main.NAME,
         version = Main.VERSION,
         acceptedMinecraftVersions = "1.12.2",
-        dependencies = "after:immersiveengineering"
+        dependencies = "after:immersiveengineering;after:immersivepetroleum"
 )
 public class Main {
     public static final String MODID="orevisualdetector";
@@ -37,7 +37,7 @@ public class Main {
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
         ConfigLoader.run();
-        HandleOreData.run();
+        HandlerOreData.run();
         proxy.onPreInit();
     }
     @EventHandler

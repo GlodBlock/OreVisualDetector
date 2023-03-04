@@ -2,11 +2,13 @@ package glodblock.com.github.network;
 
 import glodblock.com.github.gui.ScannerGUI;
 import glodblock.com.github.gui.ScannerGUITexture;
-import glodblock.com.github.handlers.HandleOreData;
+import glodblock.com.github.handlers.HandlerOilVein;
+import glodblock.com.github.handlers.HandlerOreData;
 import glodblock.com.github.handlers.HandlerIEVein;
 import glodblock.com.github.orevisualdetector.Main;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -53,12 +55,12 @@ public class ScannerPacket implements IMessage {
         short[] rgba;
         try {
             if(packet.ptype == 0) {
-                String unlocalizedName = HandleOreData.mIDToNameMap.get(id);
+                String unlocalizedName = HandlerOreData.mIDToNameMap.get(id);
                 rgba = new short[]{0, 0, 0};
-                if (HandleOreData.mOreDictMap.containsKey(unlocalizedName)) {
-                    rgba = HandleOreData.mOreDictMap.get(unlocalizedName);
-                } else if (HandleOreData.mUnlocalizedMap.containsKey(unlocalizedName)) {
-                    rgba = HandleOreData.mUnlocalizedMap.get(unlocalizedName);
+                if (HandlerOreData.mOreDictMap.containsKey(unlocalizedName)) {
+                    rgba = HandlerOreData.mOreDictMap.get(unlocalizedName);
+                } else if (HandlerOreData.mUnlocalizedMap.containsKey(unlocalizedName)) {
+                    rgba = HandlerOreData.mUnlocalizedMap.get(unlocalizedName);
                 }
                 packet.ores.put(unlocalizedName, ((rgba[0] & 0xFF) << 16) + ((rgba[1] & 0xFF) << 8) + ((rgba[2] & 0xFF)));
                 packet.metaMap.put(id, unlocalizedName);
@@ -68,6 +70,13 @@ public class ScannerPacket implements IMessage {
                     rgba = HandlerIEVein.veinMap.get(veinName);
                     packet.ores.put(veinName, ((rgba[0] & 0xFF) << 16) + ((rgba[1] & 0xFF) << 8) + ((rgba[2] & 0xFF)));
                     packet.metaMap.put(id, veinName);
+                }
+            } else if (packet.ptype == 2) {
+                if (HandlerOilVein.getFluid(id) != null) {
+                    Fluid fluid = HandlerOilVein.getFluid(id);
+                    rgba = HandlerOilVein.fluidMap.get(fluid.getName());
+                    packet.ores.put(fluid.getName(), ((rgba[0] & 0xFF) << 16) + ((rgba[1] & 0xFF) << 8) + ((rgba[2] & 0xFF)));
+                    packet.metaMap.put(id, fluid.getName());
                 }
             }
         } catch (Exception ignored) {
@@ -115,11 +124,14 @@ public class ScannerPacket implements IMessage {
             short id = buf.readShort();
             int color = buf.readInt();
             if (this.ptype == 0) {
-                this.ores.put(HandleOreData.mIDToNameMap.get(id), color);
-                this.metaMap.put(id, HandleOreData.mIDToNameMap.get(id));
+                this.ores.put(HandlerOreData.mIDToNameMap.get(id), color);
+                this.metaMap.put(id, HandlerOreData.mIDToNameMap.get(id));
             } else if (this.ptype == 1) {
                 this.ores.put(HandlerIEVein.IDToVeinMap.get(id), color);
                 this.metaMap.put(id, HandlerIEVein.IDToVeinMap.get(id));
+            } else if (this.ptype == 2) {
+                this.ores.put(HandlerOilVein.getFluid(id).getName(), color);
+                this.metaMap.put(id, HandlerOilVein.getFluid(id).getName());
             }
         }
     }
@@ -151,10 +163,13 @@ public class ScannerPacket implements IMessage {
             String name = p.getKey();
             int color = p.getValue();
             if (this.ptype == 0) {
-                buf.writeShort(HandleOreData.mNameToIDMap.get(name));
+                buf.writeShort(HandlerOreData.mNameToIDMap.get(name));
                 buf.writeInt(color);
             } else if (this.ptype == 1) {
                 buf.writeShort(HandlerIEVein.veinToIDMap.get(name));
+                buf.writeInt(color);
+            } else if (this.ptype == 2) {
+                buf.writeShort(HandlerOilVein.getFluidID(name));
                 buf.writeInt(color);
             }
         }

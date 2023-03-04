@@ -15,7 +15,7 @@ import java.util.HashMap;
 /**
  * Created by GlodBlock on 17.1.2022.
  */
-public class HandleOreData {
+public class HandlerOreData {
 
     public static HashMap<String, short[]> mOreDictMap = new HashMap<>();
     public static HashMap<String, short[]> mUnlocalizedMap = new HashMap<>();

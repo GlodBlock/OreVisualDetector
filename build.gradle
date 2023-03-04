@@ -34,7 +34,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly "immersive-engineering:ImmersiveEngineering:0.12:78"
+    compile 'curse.maven:ImmersiveEngineering-231951:2974106'
+    compile 'curse.maven:ImmersivePetroleum-268250:3382321'
 }
 
 jar {

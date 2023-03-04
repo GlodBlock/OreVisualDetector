@@ -43,7 +43,7 @@ public class ScannerGUITexture extends AbstractTexture {
             for (int j = 0; j < wh; j++) {
                 image.setRGB(i, j, backgroundColor);
                 if (packet.map[i][j] != null) {
-                    if (packet.ptype == 0 || packet.ptype == 1) {
+                    if (packet.ptype == 0 || packet.ptype == 1 || packet.ptype == 2) {
                         for (short meta : packet.map[i][j].values()) {
                             final String name = packet.metaMap.get(meta);
                             if (!selected.equals("All") && !selected.equals(name)) continue;

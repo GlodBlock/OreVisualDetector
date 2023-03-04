@@ -1,6 +1,7 @@
 package glodblock.com.github.common;
 
 import glodblock.com.github.handlers.HandlerIEVein;
+import glodblock.com.github.handlers.HandlerOilVein;
 import glodblock.com.github.network.GuiOpenPacket;
 import glodblock.com.github.network.ScannerPacket;
 import glodblock.com.github.orevisualdetector.Main;
@@ -29,6 +30,9 @@ public class CommonProxy {
     public void onFinish() {
         if (Loader.isModLoaded("immersiveengineering")) {
             HandlerIEVein.init();
+        }
+        if (Loader.isModLoaded("immersivepetroleum")) {
+            HandlerOilVein.init();
         }
     }
 

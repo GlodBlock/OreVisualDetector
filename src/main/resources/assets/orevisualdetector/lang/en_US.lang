@@ -6,8 +6,12 @@ itemGroup.Scanner=The Scanner
 
 #GUI
 scanner.gui.all=All
+scanner.gui.fluid.amount=Amount: %,d L
+scanner.gui.fluid.recover=Replenish Rate: %,d L/t
 
 #Info
 scanner.mode.0=Scan in world ores
 scanner.mode.1=Scan IE Excavator veins
-scanner.error.ie=IE isn't installed
+scanner.mode.2=Scan Immersive Petroleum reservoirs
+scanner.error.ie=Immersive Engineering isn't installed
+scanner.error.ip=Immersive Petroleum isn't installed

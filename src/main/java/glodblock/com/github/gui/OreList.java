@@ -1,10 +1,12 @@
 package glodblock.com.github.gui;
 
-import glodblock.com.github.handlers.HandleOreData;
-import glodblock.com.github.handlers.HandlerIEVein;
+import glodblock.com.github.handlers.HandlerOreData;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
 import java.util.*;
@@ -66,13 +68,13 @@ public class OreList extends GuiScrollingList {
         } else {
             if (this.mode == 0) {
                 short id = -1;
-                if (HandleOreData.mNameToIDMap.containsKey(keys.get(slotIdx))) {
-                    id = HandleOreData.mNameToIDMap.get(keys.get(slotIdx));
+                if (HandlerOreData.mNameToIDMap.containsKey(keys.get(slotIdx))) {
+                    id = HandlerOreData.mNameToIDMap.get(keys.get(slotIdx));
                 }
                 if (id == -1) {
                     displayString = "Unknown";
                 } else {
-                    String unName = HandleOreData.mIDToDisplayNameMap.get(id);
+                    String unName = HandlerOreData.mIDToDisplayNameMap.get(id);
                     if (I18n.hasKey(unName + ".name")) {
                         displayString = I18n.format(unName + ".name");
                     } else if (I18n.hasKey(unName)) {
@@ -87,6 +89,9 @@ public class OreList extends GuiScrollingList {
                 } else {
                     displayString = keys.get(slotIdx);
                 }
+            } else if (this.mode == 2) {
+                Fluid fluid = FluidRegistry.getFluid(keys.get(slotIdx));
+                displayString = fluid.getLocalizedName(new FluidStack(fluid, 1));
             }
         }
         parent.drawString(

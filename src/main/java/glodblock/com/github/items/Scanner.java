@@ -1,11 +1,12 @@
 package glodblock.com.github.items;
 
 import blusunrize.immersiveengineering.api.tool.ExcavatorHandler;
+import flaxbeard.immersivepetroleum.api.crafting.PumpjackHandler;
 import glodblock.com.github.config.ConfigLoader;
-import glodblock.com.github.gui.ScannerGUI;
 import glodblock.com.github.handlers.GetItemFromBlock;
-import glodblock.com.github.handlers.HandleOreData;
 import glodblock.com.github.handlers.HandlerIEVein;
+import glodblock.com.github.handlers.HandlerOilVein;
+import glodblock.com.github.handlers.HandlerOreData;
 import glodblock.com.github.network.ScannerPacket;
 import glodblock.com.github.orevisualdetector.Main;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +33,7 @@ import static glodblock.com.github.network.ScannerPacket.addOre;
  */
 public class Scanner extends ItemBase {
 
-    private static final int MODES = 2;
+    private static final int MODES = 3;
 
     public Scanner(String name) {
         super(name);
@@ -73,6 +74,13 @@ public class Scanner extends ItemBase {
                     sus = true;
                 } else {
                     aPlayer.sendMessage(new TextComponentTranslation("scanner.error.ie"));
+                }
+            } else if (scannerMode == 2) {
+                if (Loader.isModLoaded("immersivepetroleum")) {
+                    this.runIPReservoirScan(chunks, aWorld, packet);
+                    sus = true;
+                } else {
+                    aPlayer.sendMessage(new TextComponentTranslation("scanner.error.ip"));
                 }
             }
 
@@ -143,17 +151,17 @@ public class Scanner extends ItemBase {
                         if (tItem == null || tItem.isEmpty()) continue;
                         for (int ID : OreDictionary.getOreIDs(tItem)) {
                             String tOreDictName = OreDictionary.getOreName(ID);
-                            if (HandleOreData.mOreDictMap.containsKey(tOreDictName)) {
-                                packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandleOreData.mNameToIDMap.get(tOreDictName));
-                                addOre(packet, HandleOreData.mNameToIDMap.get(tOreDictName));
-                                HandleOreData.mIDToDisplayNameMap.put(HandleOreData.mNameToIDMap.get(tOreDictName), tItem.getTranslationKey());
+                            if (HandlerOreData.mOreDictMap.containsKey(tOreDictName)) {
+                                packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandlerOreData.mNameToIDMap.get(tOreDictName));
+                                addOre(packet, HandlerOreData.mNameToIDMap.get(tOreDictName));
+                                HandlerOreData.mIDToDisplayNameMap.put(HandlerOreData.mNameToIDMap.get(tOreDictName), tItem.getTranslationKey());
                             }
                         }
                         String unName = tItem.getTranslationKey();
-                        if (HandleOreData.mUnlocalizedMap.containsKey(unName)) {
-                            packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandleOreData.mNameToIDMap.get(unName));
-                            addOre(packet, HandleOreData.mNameToIDMap.get(unName));
-                            HandleOreData.mIDToDisplayNameMap.put(HandleOreData.mNameToIDMap.get(unName), tItem.getTranslationKey());
+                        if (HandlerOreData.mUnlocalizedMap.containsKey(unName)) {
+                            packet.addBlock(c.getPos().x * 16 + x, y, c.getPos().z * 16 + z, HandlerOreData.mNameToIDMap.get(unName));
+                            addOre(packet, HandlerOreData.mNameToIDMap.get(unName));
+                            HandlerOreData.mIDToDisplayNameMap.put(HandlerOreData.mNameToIDMap.get(unName), tItem.getTranslationKey());
                         }
                     }
                 }
@@ -168,6 +176,24 @@ public class Scanner extends ItemBase {
                     for (int z = 1; z < 16; z++) {
                         packet.addBlock(c.getPos().x * 16 + x, 255, c.getPos().z * 16 + z, HandlerIEVein.veinToIDMap.get(vein.name));
                         addOre(packet, HandlerIEVein.veinToIDMap.get(vein.name));
+                    }
+            }
+        }
+    }
+
+    private void runIPReservoirScan(List<Chunk> area, World world, ScannerPacket packet) {
+        for (Chunk c : area) {
+            PumpjackHandler.OilWorldInfo veinInfo = PumpjackHandler.getOilWorldInfo(world, c.x, c.z);
+            PumpjackHandler.ReservoirType vein = veinInfo.getType();
+            if (vein != null) {
+                for (int x = 1; x < 16; x++)
+                    for (int z = 1; z < 16; z++) {
+                        packet.addBlock(c.getPos().x * 16 + x, 0, c.getPos().z * 16 + z, (short) HandlerOilVein.getFluidID(vein.getFluid()));
+                        packet.addBlock(c.getPos().x * 16 + x, 1, c.getPos().z * 16 + z, (short) (veinInfo.current >> 16));
+                        packet.addBlock(c.getPos().x * 16 + x, 2, c.getPos().z * 16 + z, (short) (veinInfo.current & 0xFFFF));
+                        packet.addBlock(c.getPos().x * 16 + x, 3, c.getPos().z * 16 + z, (short) (vein.replenishRate >> 16));
+                        packet.addBlock(c.getPos().x * 16 + x, 4, c.getPos().z * 16 + z, (short) (vein.replenishRate & 0xFFFF));
+                        addOre(packet, (short) HandlerOilVein.getFluidID(vein.getFluid()));
                     }
             }
         }

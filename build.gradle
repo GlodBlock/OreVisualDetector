@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "1.0.1"
+version = "2.0.0"
 group = "OreVisualDetector"
 archivesBaseName = "Ore Visual Detector"
 
